@@ -1,0 +1,4 @@
+Manufacturer: Rockwell
+Name: Allen Bradley ControlLogix 5560
+Documentation: https://literature.rockwellautomation.com/idc/groups/literature/documents/um/1756-um001_-en-p.pdf
+Notes: Allen Bradley CPU model

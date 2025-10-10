@@ -1,0 +1,4 @@
+Manufacturer: Belden
+Name: Hirschmann RS20
+Documentation: https://www.doc.hirschmann.com/pdf/IG_RS20_Basic_01_0612_en.pdf
+Notes: DIN rail switch

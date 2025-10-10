@@ -1,0 +1,1 @@
+gunicorn --workers 1 --threads 4 --bind 0.0.0.0:5001 app:app --certfile=cert.pem  --keyfile=key.pem

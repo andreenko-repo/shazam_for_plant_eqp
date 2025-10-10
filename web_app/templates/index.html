@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Identifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Equipment Identifier</h1>
+        <p class="description">Point your camera at a piece of equipment and click Identify.</p>
+        
+        <div class="camera-box">
+            <video id="video" width="640" height="480" autoplay playsinline></video>
+            <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+        </div>
+        
+        <div class="controls">
+            <button id="capture-btn">Capture & Identify</button>
+        </div>
+        
+        <div id="results-container">
+            <h2>Results</h2>
+            <div id="results">
+                <!-- Results area -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureBtn = document.getElementById('capture-btn');
+        const resultsDiv = document.getElementById('results');
+
+        // --- Camera access (HTTPS required) ---
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error("Error accessing camera: ", err);
+                resultsDiv.innerHTML = `<p class="error">Could not access camera. Please grant permission and ensure you are on a secure connection (localhost or HTTPS).</p>`;
+            }
+        }
+        
+        // --- Capture button click ---
+        captureBtn.addEventListener('click', async () => {
+            resultsDiv.innerHTML = '<p class="loading">Capturing and identifying...</p>';
+            captureBtn.disabled = true;
+            
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            const imageDataUrl = canvas.toDataURL('image/jpeg');
+            
+            // --- Send image for processing ---
+            try {
+                const response = await fetch('/identify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: imageDataUrl }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server responded with status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `<p class="error">An error occurred while identifying the equipment.</p>`;
+            } finally {
+                captureBtn.disabled = false;
+            }
+        });
+
+        // --- Display the results ---
+        function displayResults(data) {
+            if (!data || data.length === 0) {
+                resultsDiv.innerHTML = '<p>No matches found.</p>';
+                return;
+            }
+
+            let html = '';
+            data.forEach((item, index) => {
+                const payload = item.payload;
+
+                const infoText = payload.information || 'No information available.';
+                const escapedInfo = document.createElement('div');
+                escapedInfo.innerText = infoText;
+
+                html += `
+                    <div class="result-item">
+                        <h3>Match found. (Score: ${item.score.toFixed(4)})</h3>
+                        <p><span class="label">Equipment:</span> ${payload.equipment_name}</p>
+                        <div class="info-box">${escapedInfo.innerHTML}</div>
+                    </div>
+                `;
+            });
+            resultsDiv.innerHTML = html;
+        }
+
+        startCamera();
+    </script>
+</body>
+</html>

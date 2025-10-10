@@ -1,0 +1,140 @@
+/* --- macOS Style --- */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 720px;
+    width: 100%;
+    margin: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    font-size: 1rem;
+    color: #6e6e73;
+    margin-bottom: 2rem;
+}
+
+.camera-box {
+    margin: 1.5rem auto;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 640px;
+    background-color: #000;
+}
+
+#video {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.controls {
+    margin: 2rem 0;
+}
+
+#capture-btn {
+    background-color: #007aff;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#capture-btn:hover {
+    filter: brightness(1.1);
+}
+
+#capture-btn:active {
+    transform: scale(0.98);
+    filter: brightness(1.0);
+}
+
+#results-container {
+    margin-top: 2rem;
+    text-align: left;
+}
+
+#results-container h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.result-item {
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.result-item h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.result-item p {
+    margin: 0.5rem 0;
+    color: #333;
+    word-wrap: break-word;
+}
+
+.result-item .label {
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.info-box {
+    background-color: #e9e9eb;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    font-family: "SF Mono", Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    color: #222;
+}
+
+.loading, .error {
+    font-size: 1rem;
+    color: #6e6e73;
+    padding: 2rem;
+}
+
+.error {
+    color: #ff3b30;
+    font-weight: 500;
+}

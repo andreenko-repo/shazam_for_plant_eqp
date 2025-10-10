@@ -1,0 +1,4 @@
+Manufacturer: Yokogawa Electric
+Name: EJX110A Differential Pressure Transmitter
+Documentation: https://web-material3.yokogawa.com/GS01C25B01-01EN.pdf
+Notes: Yokogawa DP transmitter
